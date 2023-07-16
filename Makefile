@@ -2,7 +2,8 @@
 
 .PHONY: run_website install_kind install_kubectl create_kind_cluster \
 	create_docker_registry connect_registry_to_kind_network \
-	connect_registry_to_kind create_kind_cluster_with_registry
+	connect_registry_to_kind create_kind_cluster_with_registry\
+	install_app
 
 run_website:
 	docker build -t explorecalifornia.com . && \
@@ -32,3 +33,6 @@ create_kind_cluster: install_kind install_kubectl create_docker_registry
 
 create_kind_cluster_with_registry:
 	$(MAKE) create_kind_cluster && $(MAKE) connect_registry_to_kind
+
+install_app:
+	helm upgrade --atomic --install explore-california-website ./chart
